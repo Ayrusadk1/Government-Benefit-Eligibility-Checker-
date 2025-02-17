@@ -1,0 +1,60 @@
+// Benefit Eligibility Rules (2023/2024 thresholds)
+const benefits = {
+    universalCredit: {
+        name: "Universal Credit",
+        criteria: (data) => {
+            return data.income < 1600 && 
+                   data.savings < 16000 && 
+                   !(data.employment === 'student');
+        }
+    },
+    pip: {
+        name: "Personal Independence Payment (PIP)",
+        criteria: (data) => data.disability
+    },
+    housingBenefit: {
+        name: "Housing Benefit",
+        criteria: (data) => data.income < 1200 && data.savings < 16000
+    },
+    childBenefit: {
+        name: "Child Benefit",
+        criteria: (data) => data.children && data.household >= 2
+    },
+    carersAllowance: {
+        name: "Carer's Allowance",
+        criteria: (data) => data.carer && data.income < 132
+    }
+};
+
+document.getElementById('benefitForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    // Collect user data
+    const formData = {
+        age: parseInt(document.getElementById('age').value),
+        postcode: document.getElementById('postcode').value,
+        employment: document.getElementById('employment').value,
+        income: parseInt(document.getElementById('income').value) || 0,
+        savings: parseInt(document.getElementById('savings').value) || 0,
+        household: parseInt(document.getElementById('household').value),
+        disability: document.getElementById('disability').checked,
+        carer: document.getElementById('carer').checked,
+        children: document.getElementById('children').checked
+    };
+
+    // Check eligibility
+    const eligibleBenefits = [];
+    for (const [key, benefit] of Object.entries(benefits)) {
+        if (benefit.criteria(formData)) {
+            eligibleBenefits.push(benefit.name);
+        }
+    }
+
+    // Display results
+    const resultsDiv = document.getElementById('benefitsList');
+    resultsDiv.innerHTML = eligibleBenefits.length > 0 ?
+        eligibleBenefits.map(b => `<div class="benefit-card">${b}</div>`).join('') :
+        `<p>Based on your inputs, you may not qualify for major benefits. Check local council support.</p>`;
+    
+    document.getElementById('results').classList.remove('hidden');
+});

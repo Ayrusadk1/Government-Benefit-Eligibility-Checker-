@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UK Benefit Checker - See What You Qualify For</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>UK Benefit Eligibility Checker</h1>
+        <p>Find out which benefits you might be entitled to</p>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <form id="benefitForm">
+                <!-- Personal Details -->
+                <fieldset>
+                    <legend>Your Situation</legend>
+                    <label>Age: <input type="number" id="age" required></label>
+                    <label>Postcode: <input type="text" id="postcode" required></label>
+                    <label>Employment Status:
+                        <select id="employment">
+                            <option value="employed">Employed</option>
+                            <option value="unemployed">Unemployed</option>
+                            <option value="self-employed">Self-Employed</option>
+                            <option value="student">Student</option>
+                        </select>
+                    </label>
+                </fieldset>
+
+                <!-- Financial Details -->
+                <fieldset>
+                    <legend>Income & Savings</legend>
+                    <label>Monthly Income (£): <input type="number" id="income"></label>
+                    <label>Savings (£): <input type="number" id="savings"></label>
+                    <label>Household Size: <input type="number" id="household" min="1"></label>
+                </fieldset>
+
+                <!-- Additional Circumstances -->
+                <fieldset>
+                    <legend>Special Circumstances</legend>
+                    <label><input type="checkbox" id="disability"> Disability or long-term health condition</label>
+                    <label><input type="checkbox" id="carer"> Full-time carer</label>
+                    <label><input type="checkbox" id="children"> Children under 18</label>
+                </fieldset>
+
+                <button type="submit">Check Eligibility</button>
+            </form>
+        </div>
+
+        <div id="results" class="hidden">
+            <h2>Potential Benefits</h2>
+            <div id="benefitsList"></div>
+        </div>
+    </main>
+
+    <footer>
+        <p>This tool follows <a href="https://www.gov.uk/" target="_blank">GOV.UK</a> guidelines. Always verify with official sources.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
